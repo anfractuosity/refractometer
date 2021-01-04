@@ -77,12 +77,12 @@ def process_dataset(csvname, output):
         sig, _ = signal.find_peaks(-m)
         prominences = signal.peak_prominences(-m, sig)[0]
         z = np.argwhere(prominences > 0.5)
-        pos_x = sig[z[-1][0]]
+        brix_line = sig[z[-1][0]]
  
         # Add lines denoting current position of brix line etc.
         crop_img = np.swapaxes(np.array([m]*w),0,1)
         crop_img = cv2.cvtColor(crop_img.astype(np.uint8), cv2.COLOR_GRAY2BGR)
-        crop_img = cv2.line(crop_img, (0, pos_x), (w, pos_x), (0, 0, 255), 4)
+        crop_img = cv2.line(crop_img, (0, brix_line), (w, brix_line), (0, 0, 255), 4)
         crop_img = cv2.line(crop_img, (0, zpos), (w, zpos), (0, 255, 0), 4)
         crop_img = cv2.line(crop_img, (0, tpos), (w, tpos), (255, 0, 0), 4)
 
@@ -99,8 +99,8 @@ def process_dataset(csvname, output):
 
         # Only use first 100 images in dataset and only write image if detected line is below zero line (as it 
         # must be during calibration)
-        if counter <= 100 and pos_x > zpos:
-            current_diff_from_top_scale = pos_x - tpos
+        if counter <= 100 and brix_line > zpos:
+            current_diff_from_top_scale = brix_line - tpos
             scale_height = zpos - tpos
             if True:
             #if len(diffs) == 0 or current_diff_from_top_scale > diffs[-1]:
