@@ -17,8 +17,13 @@ pip3 install picamera
 
 # Setup for image processing test
 
+You probably need to do something like the following to process the images which you collected:
+
 ```
 pip3 install opencv-python
+python3 process_images.py
 ```
-
  
+# To Do
+
+* See if the tracking of the brix line can be improved
